@@ -1,35 +1,15 @@
-"""
-S3 Sensor Connection Test
-"""
-
+from datetime import datetime
 from airflow import DAG
-from airflow.operators import SimpleHttpOperator, HttpSensor, BashOperator, EmailOperator, S3KeySensor
-from datetime import datetime, timedelta
+from airflow.operators.dummy_operator import DummyOperator
+from airflow.operators.python_operator import PythonOperator
 
-default_args = {
-    'owner': 'Marco Mendoza',
-    'depends_on_past': False,
-    'start_date': datetime(2016, 11, 1),
-    'retries': 1,
-    'retry_delay': timedelta(minutes=0)
-}
+def print_hello():
+    return 'Hello world from first Airflow DAG!'
 
-dag = DAG('s3_dag_test', default_args=default_args, schedule_interval= '@once')
+dag = DAG('hello_world', description='Hello World DAG',
+          schedule_interval='0 12 * * *',
+          start_date=datetime(2017, 3, 20), catchup=False)
 
-t1 = BashOperator(
-    task_id='bash_test',
-    bash_command='echo "hello, it should work" > s3_conn_test.txt',
-    dag=dag)
+hello_operator = PythonOperator(task_id='hello_task', python_callable=print_hello, dag=dag)
 
-sensor = S3KeySensor(
-    task_id='check_s3_for_file_in_s3',
-    bucket_key='file-to-watch-*',
-    wildcard_match=True,
-    bucket_name='S3-Bucket-To-Watch',
-    s3_conn_id='my_conn_S3',
-    timeout=18*60*60,
-    poke_interval=120,
-    dag=dag)
-
-t1 >> sensor
-
+hello_operator
