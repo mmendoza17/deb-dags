@@ -11,10 +11,10 @@ from psycopg2.extras import execute_values
 #default arguments
 
 default_args = {
-    'owner': 'grisell.reyes',
+    'owner': 'Marco Mendoza',
     'depends_on_past': False,
     'start_date': datetime(2021, 10, 1),
-    'email': ['grisell.reyes@wizeline.com'],
+    'email': ['marco.mendoza@wizeline.com'],
     'email_on_failure': True,
     'email_on_retry': False,
     'retries': 2,
@@ -32,11 +32,11 @@ def csv_to_postgres():
     get_postgres_conn = PostgresHook(postgres_conn_id='postgres_default').get_conn()
     curr = get_postgres_conn.cursor("cursor")
     # CSV loading to table.
-    with open('/Users/grisell.reyes/data-bootcamp-terraforms/kubernetes/username.csv', 'r') as f:
+    file = "table.csv"
+    with open(file, 'r') as f:
         next(f)
         curr.copy_from(f, 'username_table', sep=',')
         get_postgres_conn.commit()
-
 
 task1 = PostgresOperator(task_id = 'create_table',
                         sql="""
