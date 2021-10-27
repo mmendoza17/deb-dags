@@ -28,11 +28,11 @@ dag = DAG('insert_data_postgres',
 
 def csv_to_postgres():
     #Open Postgres Connection
-    pg_hook = PostgresHook(postgres_conn_id='postgres_default')
-    get_postgres_conn = PostgresHook(postgres_conn_id='postgres_default').get_conn()
+    pg_hook = PostgresHook(postgres_conn_id='conn_postgress')
+    get_postgres_conn = PostgresHook(postgres_conn_id='conn_postgress').get_conn()
     curr = get_postgres_conn.cursor("cursor")
     # CSV loading to table.
-    file = "./table.csv"
+    file = "table.csv"
     with open(file, 'r') as f:
         next(f)
         curr.copy_from(f, 'pokemon', sep=',')
