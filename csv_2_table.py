@@ -17,7 +17,7 @@ default_args = {
     'email': ['marco.mendoza@wizeline.com'],
     'email_on_failure': True,
     'email_on_retry': False,
-    'retries': 2,
+    'retries': 1,
     'retry_delay': timedelta(minutes=3),
 }
 

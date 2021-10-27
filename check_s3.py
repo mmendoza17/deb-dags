@@ -25,11 +25,11 @@ t1 = BashOperator(
     dag=dag)
 
 sensor = S3KeySensor(
-    task_id='check_s3_for_file_in_s3',
-    bucket_key='file-to-watch-*',
+    task_id="check_s3",
+    bucket_key="DE_bootcamp",
     wildcard_match=True,
     bucket_name='S3-Bucket-To-Watch',
-    s3_conn_id='my_conn_S3',
+    aws_conn_id="conn_S3",
     timeout=18*60*60,
     poke_interval=120,
     dag=dag)
