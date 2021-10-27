@@ -3,7 +3,8 @@ S3 Sensor Connection Test
 """
 
 from airflow import DAG
-from airflow.operators import SimpleHttpOperator, HttpSensor, BashOperator, EmailOperator, S3KeySensor
+from airflow.operators import HttpSensor, BashOperator, EmailOperator, S3KeySensor
+#from airflow.hooks import SimpleHttpOperator
 from datetime import datetime, timedelta
 
 default_args = {
