@@ -32,19 +32,27 @@ def csv_to_postgres():
     get_postgres_conn = PostgresHook(postgres_conn_id='postgres_default').get_conn()
     curr = get_postgres_conn.cursor("cursor")
     # CSV loading to table.
-    file = "table.csv"
+    file = "./table.csv"
     with open(file, 'r') as f:
         next(f)
-        curr.copy_from(f, 'username_table', sep=',')
+        curr.copy_from(f, 'pokemon', sep=',')
         get_postgres_conn.commit()
 
 task1 = PostgresOperator(task_id = 'create_table',
                         sql="""
-                        CREATE TABLE IF NOT EXISTS username (    
-                            Username VARCHAR,
-                            Identifier INTEGER,
-                            first_name VARCHAR,
-                            last_name VARCHAR);
+                        CREATE TABLE IF NOT EXISTS pokemon (    
+                            Name VARCHAR(255),
+                            Type_1 VARCHAR(255),
+                            Type_2 VARCHAR(255),
+                            Total INTEGER,
+                            HP INTEGER,
+                            Attack INTEGER,
+                            Defense INTEGER,
+                            Sp_Atk INTEGER,
+                            Sp_Def INTEGER,
+                            Speed INTEGER,
+                            Generation INTEGER,
+                            Legendary VARCHAR(255));
                             """,
                             postgres_conn_id= 'conn_postgress',
                             autocommit=True,
