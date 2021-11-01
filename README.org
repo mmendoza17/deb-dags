@@ -1,0 +1,5 @@
+#+title: Readme
+#+author: Marco Mendoza
+#+email: marco.mendoza@wizeline.com
+
+This is an example of a readme file in a org file
