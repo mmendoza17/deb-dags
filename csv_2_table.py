@@ -52,7 +52,8 @@ def csv_to_postgres():
 
 task1 = PostgresOperator(task_id = 'create_table',
                         sql="""
-                        CREATE TABLE IF NOT EXISTS pokemon (    
+                        CREATE TABLE IF NOT EXISTS pokemon (
+                            Number INTEGER,   
                             Name VARCHAR(255),
                             Type_1 VARCHAR(255),
                             Type_2 VARCHAR(255),
